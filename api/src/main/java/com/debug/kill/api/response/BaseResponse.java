@@ -2,6 +2,9 @@ package com.debug.kill.api.response;
 
 import com.debug.kill.api.enums.StatusCode;
 
+/**
+ * @author 59742
+ */
 public class BaseResponse<T> {
 
     private Integer code;

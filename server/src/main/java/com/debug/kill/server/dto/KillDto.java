@@ -7,10 +7,10 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
+ * 前端传递的数据
  * @author Damocles
  */
 @Data
-@ToString
 public class KillDto implements Serializable {
 
     @NotNull

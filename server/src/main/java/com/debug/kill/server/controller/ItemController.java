@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * @author Damocles
  */
-@Controller
+@RestController
 public class ItemController {
 
     private static final Logger logger = LoggerFactory.getLogger(ItemController.class);

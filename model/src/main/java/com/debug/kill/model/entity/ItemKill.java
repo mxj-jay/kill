@@ -2,10 +2,15 @@ package com.debug.kill.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import lombok.Getter;
 
 import java.util.Date;
 
+/**
+ * @author 59742
+ */
 @Data
+@Getter
 public class ItemKill {
     private Integer id;
 
@@ -26,6 +31,6 @@ public class ItemKill {
 
     private String itemName;
 
-    //采用服务器时间控制是否可以进行抢购
+    /**采用服务器时间控制是否可以进行抢购*/
     private Integer canKill;
 }
