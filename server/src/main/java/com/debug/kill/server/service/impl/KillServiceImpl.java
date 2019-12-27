@@ -6,6 +6,7 @@ import com.debug.kill.model.mapper.ItemKillMapper;
 import com.debug.kill.model.mapper.ItemKillSuccessMapper;
 import com.debug.kill.server.enums.SysConstant;
 import com.debug.kill.server.service.KillService;
+import com.debug.kill.server.service.RabbitSenderService;
 import com.debug.kill.server.utils.SnowFlake;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
@@ -29,6 +30,9 @@ public class KillServiceImpl implements KillService {
 
     @Autowired
     private ItemKillMapper itemKillMapper;
+
+    @Autowired
+    private RabbitSenderService rabbitSenderService;
 
 
     @Override
@@ -78,6 +82,10 @@ public class KillServiceImpl implements KillService {
         //TODO：入库
         if (itemKillSuccessMapper.countByKillUserId(kill.getId(),userId) <= 0){
             itemKillSuccessMapper.insert(itemKillSuccess);
+
+            //TODO: 异步发送邮件信息
+            rabbitSenderService.sendKillSuccessEmailMsg(orderNo);
+
         }
 
     }

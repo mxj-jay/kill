@@ -7,6 +7,9 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
+/**
+ * @author Damocles
+ */
 @Mapper
 public interface ItemKillSuccessMapper {
     int deleteByPrimaryKey(String code);

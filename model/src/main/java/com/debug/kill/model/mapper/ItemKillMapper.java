@@ -6,6 +6,9 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
+/**
+ * @author Damocles
+ */
 @Mapper
 public interface ItemKillMapper {
     List<ItemKill> selectAll();

@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * @author Damocles
  */
-@RestController
+@Controller
 public class ItemController {
 
     private static final Logger logger = LoggerFactory.getLogger(ItemController.class);
@@ -46,7 +46,6 @@ public class ItemController {
             logger.error("获取待秒杀商品列表出现异常:", e.fillInStackTrace());
             return "redirect:base/error";
         }
-
         return "list";
     }
 

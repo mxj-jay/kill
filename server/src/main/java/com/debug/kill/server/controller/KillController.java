@@ -20,7 +20,7 @@ import javax.servlet.http.HttpSession;
  * Controller --> Service --> Mapper
  * @author 59742
  */
-@RestController
+@Controller
 public class KillController {
 
     private static final Logger logger = LoggerFactory.getLogger(KillController.class);
@@ -39,6 +39,7 @@ public class KillController {
      * @return
      */
     @RequestMapping(value = prefix + "/execute", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ResponseBody
     public BaseResponse execute(@RequestBody @Validated KillDto dto, BindingResult result) {
         if (result.hasErrors() || dto.getKillId() <= 0) {
             return new BaseResponse(StatusCode.InvalidParams);
@@ -58,4 +59,13 @@ public class KillController {
     }
 
 
+    @RequestMapping(value = prefix+"/execute/success", method = RequestMethod.GET)
+    public String executeSuccess(){
+        return "executeSuccess";
+    }
+
+    @RequestMapping(value = prefix+"/execute/fail", method = RequestMethod.GET)
+    public String executeFail(){
+        return "executeFail";
+    }
 }
