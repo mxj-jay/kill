@@ -83,8 +83,11 @@ public class KillServiceImpl implements KillService {
         if (itemKillSuccessMapper.countByKillUserId(kill.getId(),userId) <= 0){
             itemKillSuccessMapper.insert(itemKillSuccess);
 
-            //TODO: 异步发送邮件信息
+            //TODO: 异步发送邮件信息 rabbitmq + javamail
             rabbitSenderService.sendKillSuccessEmailMsg(orderNo);
+
+            //TODO: 入死信队列, 超时秒杀未支付更改状态
+            rabbitSenderService.sendKillSuccessOrderExpireMsg(orderNo);
 
         }
 

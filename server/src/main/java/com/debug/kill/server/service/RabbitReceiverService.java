@@ -28,6 +28,13 @@ public class RabbitReceiverService {
     @Autowired
     private MailService mailService;
 
+    @Autowired
+    private ItemKillSuccessMapper itemKillSuccessMapper;
+
+    /**
+     * 异步邮件通知--接收消息
+     * @param info
+     */
     @RabbitListener(queues = {"${mq.kill.item.success.email.queue}"}, containerFactory = "singleListenerContainer")
     public void consumeEmailMsg(KillSuccessUserInfo info) {
         try {
@@ -45,7 +52,29 @@ public class RabbitReceiverService {
         }
     }
 
+    /**
+     * 秒杀成功后超时未支付-监听者
+     * 消息的接收方绑定真正的消费队列
+     * @param info
+     */
+    @RabbitListener(queues = {"${mq.kill.item.success.kill.dead.real.queue}"}, containerFactory = "singleListenerContainer")
+    public void consumeExpireOrder(KillSuccessUserInfo info) {
+        try {
+            logger.info("用户秒杀成功后超时未支付-监听者-接收消息:{}", info);
 
+            if (info!=null){
+                KillSuccessUserInfo entity = itemKillSuccessMapper.selectByCode(info.getCode());
+
+                if (entity!=null && entity.getStatus().intValue()==0){
+                    itemKillSuccessMapper.expireOrder(info.getCode());
+                }
+            }
+
+        }catch (Exception e){
+            logger.error("用户秒杀成功后超时未支付-监听者-发生异常：",e.fillInStackTrace());
+        }
+
+    }
 
 
 }
