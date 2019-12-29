@@ -66,7 +66,7 @@
 
 
 
-  <!--获取秒杀详情V2-->
+  <!--获取秒杀详情V2 数据库层实现抢单逻辑优化-->
   <select id="selectByIdV2" resultType="com.debug.kill.model.entity.ItemKill">
     SELECT
       a.*,

@@ -60,6 +60,39 @@ public class KillServiceImpl implements KillService {
         return res;
     }
 
+    /**
+     * 商品秒杀核心业务逻辑的处理-mysql的优化
+     * @param killId
+     * @param userId
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public Boolean killItemV2(Integer killId, Integer userId) throws Exception {
+        Boolean result=false;
+
+        //TODO:判断当前用户是否已经抢购过当前商品
+        if (itemKillSuccessMapper.countByKillUserId(killId,userId) <= 0){
+            //TODO:A.查询待秒杀商品详情
+            ItemKill itemKill=itemKillMapper.selectByIdV2(killId);
+
+            //TODO:判断是否可以被秒杀canKill=1?
+            if (itemKill!=null && 1==itemKill.getCanKill() && itemKill.getTotal()>0){
+                //TODO:B.扣减库存-减一
+                int res=itemKillMapper.updateKillItemV2(killId);
+
+                //TODO:扣减是否成功?是-生成秒杀成功的订单，同时通知用户秒杀成功的消息
+                if (res>0){
+                    commonRecordKillSuccessInfo(itemKill,userId);
+
+                    result=true;
+                }
+            }
+        }else{
+            throw new Exception("您已经抢购过该商品了!");
+        }
+        return result;
+    }
 
     /**
      * 公共方法 -- 记录用户秒杀成功后生成订单 - 并且异步邮件通知

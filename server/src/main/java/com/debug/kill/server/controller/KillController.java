@@ -81,8 +81,8 @@ public class KillController {
         }
         BaseResponse response = new BaseResponse(StatusCode.Success);
         try {
-            // 不加分布式锁
-            Boolean res = killService.killItem(dto.getKillId(), dto.getUserId());
+            // killItemV2方法从sql层面优化抢单逻辑 -- 当并发线程数很大时仍然存在同时抢单
+            Boolean res = killService.killItemV2(dto.getKillId(), dto.getUserId());
             if (!res) {
                 return new BaseResponse(StatusCode.Fail.getCode(), "哈哈~商品已抢购完毕或者不在抢购时间段哦!");
             }
