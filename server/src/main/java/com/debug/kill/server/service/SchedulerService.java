@@ -31,7 +31,8 @@ public class SchedulerService {
     /**
      * 定时获取status=0的订单并判断是否超过TTL，然后进行失效
      */
-    @Scheduled(cron = "0/10 * * * * ? ")
+//    @Scheduled(cron = "0/10 * * * * ? ")
+    @Scheduled(cron = "0 0/30 * * * ?")
     public void schedulerExpireOrders() {
         logger.info("-----定时任务1-----");
 
@@ -55,14 +56,14 @@ public class SchedulerService {
 
     }
 
-    @Scheduled(cron = "0/10 * * * * ?")
-    public void schedulerExpireOrdersV2(){
-        logger.info("v2的定时任务----");
-    }
-
-    @Scheduled(cron = "0/10 * * * * ?")
-    public void schedulerExpireOrdersV3(){
-        logger.info("v3的定时任务----");
-    }
+//    @Scheduled(cron = "0/10 * * * * ?")
+//    public void schedulerExpireOrdersV2(){
+//        logger.info("v2的定时任务----");
+//    }
+//
+//    @Scheduled(cron = "0/10 * * * * ?")
+//    public void schedulerExpireOrdersV3(){
+//        logger.info("v3的定时任务----");
+//    }
 
 }
