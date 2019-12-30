@@ -233,8 +233,12 @@ public class KillServiceImpl implements KillService {
                     throw new Exception("您已经抢购过该商品了!");
                 }
             }
-        }finally {
-            interProcessMutex.release();
+        }catch (Exception e){
+            throw new Exception("还没到抢购日期、已过了抢购时间或已被抢购完毕！");
+        } finally {
+            if (interProcessMutex!=null){
+                interProcessMutex.release();
+            }
         }
         return result;
     }
