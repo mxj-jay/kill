@@ -36,10 +36,10 @@ public class RandomUtil {
         return sb.toString();
     }
 
-
+    /**Md5加密*/
 //    public static void main(String[] args) {
 //        String salt="11299c42bf954c0abb373efbae3f6b26";
-//        String password="debug";
+//        String password="jay";
 //        System.out.println(new Md5Hash(password,salt));
 //    }
 }
